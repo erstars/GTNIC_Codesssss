@@ -21,16 +21,18 @@ const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const scryptAsync = promisify(scrypt);
 
 // Only these files are served, so .env and server.js can never be downloaded.
+// Each path is written out in full so hosting services (Vercel) know to ship these files.
+const HTML = path.join(__dirname, "lomba.html");
 const PAGES = {
-  "/": ["lomba.html", "text/html; charset=utf-8"],
-  "/lomba.html": ["lomba.html", "text/html; charset=utf-8"],
-  "/lomba.css": ["lomba.css", "text/css; charset=utf-8"],
-  "/lomba.js": ["lomba.js", "text/javascript; charset=utf-8"],
-  "/assets/usaha-1.webp": ["assets/usaha-1.webp", "image/webp"],
-  "/assets/usaha-2.png": ["assets/usaha-2.png", "image/png"],
-  "/assets/usaha-3.webp": ["assets/usaha-3.webp", "image/webp"],
-  "/assets/usaha-4.jpg": ["assets/usaha-4.jpg", "image/jpeg"],
-  "/assets/usaha-5.jpg": ["assets/usaha-5.jpg", "image/jpeg"],
+  "/": [HTML, "text/html; charset=utf-8"],
+  "/lomba.html": [HTML, "text/html; charset=utf-8"],
+  "/lomba.css": [path.join(__dirname, "lomba.css"), "text/css; charset=utf-8"],
+  "/lomba.js": [path.join(__dirname, "lomba.js"), "text/javascript; charset=utf-8"],
+  "/assets/usaha-1.webp": [path.join(__dirname, "assets", "usaha-1.webp"), "image/webp"],
+  "/assets/usaha-2.png": [path.join(__dirname, "assets", "usaha-2.png"), "image/png"],
+  "/assets/usaha-3.webp": [path.join(__dirname, "assets", "usaha-3.webp"), "image/webp"],
+  "/assets/usaha-4.jpg": [path.join(__dirname, "assets", "usaha-4.jpg"), "image/jpeg"],
+  "/assets/usaha-5.jpg": [path.join(__dirname, "assets", "usaha-5.jpg"), "image/jpeg"],
 };
 
 class HttpError extends Error {
@@ -895,8 +897,9 @@ const server = http.createServer(async (req, res) => {
     res.end("Halaman tidak ditemukan.");
     return;
   }
-  fs.readFile(path.join(__dirname, page[0]), (error, content) => {
+  fs.readFile(page[0], (error, content) => {
     if (error) {
+      console.error("Cannot read", page[0], error.message);
       res.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" });
       res.end("Terjadi masalah pada server.");
       return;

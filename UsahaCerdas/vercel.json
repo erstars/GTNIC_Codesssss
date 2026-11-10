@@ -2,7 +2,7 @@
   "regions": ["sin1"],
   "functions": {
     "api/index.js": {
-      "includeFiles": "{lomba.html,lomba.css,lomba.js,assets/**}"
+      "includeFiles": "**/*.{html,css,js,webp,png,jpg}"
     }
   },
   "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
