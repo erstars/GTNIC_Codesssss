@@ -1,0 +1,9 @@
+{
+  "regions": ["sin1"],
+  "functions": {
+    "api/index.js": {
+      "includeFiles": "{lomba.html,lomba.css,lomba.js,assets/**}"
+    }
+  },
+  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
+}

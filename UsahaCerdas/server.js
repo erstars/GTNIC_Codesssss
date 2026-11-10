@@ -910,16 +910,21 @@ const server = http.createServer(async (req, res) => {
   });
 });
 
-server.listen(PORT, HOST, () => {
-  console.log(`UsahaCerdas berjalan di http://localhost:${PORT}`);
+// On Vercel each request is handed to the exported function; everywhere else we listen on a port.
+module.exports = (req, res) => server.emit("request", req, res);
 
-  if (HOST !== "127.0.0.1") {
-    for (const addresses of Object.values(os.networkInterfaces())) {
-      for (const address of addresses) {
-        if (address.family === "IPv4" && !address.internal) {
-          console.log(`Dari HP di Wi-Fi yang sama: http://${address.address}:${PORT}`);
+if (!process.env.VERCEL) {
+  server.listen(PORT, HOST, () => {
+    console.log(`UsahaCerdas berjalan di http://localhost:${PORT}`);
+
+    if (HOST !== "127.0.0.1") {
+      for (const addresses of Object.values(os.networkInterfaces())) {
+        for (const address of addresses) {
+          if (address.family === "IPv4" && !address.internal) {
+            console.log(`Dari HP di Wi-Fi yang sama: http://${address.address}:${PORT}`);
+          }
         }
       }
     }
-  }
-});
+  });
+}
