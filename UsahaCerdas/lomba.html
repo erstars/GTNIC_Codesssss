@@ -1,0 +1,1111 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#47745e" />
+    <title>UsahaCerdas</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%235f9a7c%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%232c5243%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2215%22%20fill%3D%22url(%23g)%22%2F%3E%3Cpath%20d%3D%22M18%2017v18a14%2014%200%200%200%2028%200V21%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%228%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M37.500%2025.500%2046%2015l8.500%2010.500%22%20fill%3D%22none%22%20stroke%3D%22%23a8ecc8%22%20stroke-width%3D%227%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E" />
+    <script>
+      // Menerapkan tema tersimpan sebelum halaman tampil, agar tidak berkedip.
+      try {
+        if (localStorage.getItem("usahacerdas_theme") === "dark") {
+          document.documentElement.dataset.theme = "dark";
+        }
+      } catch (error) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Dimuat tanpa menahan halaman. Kalau offline, memakai huruf bawaan komputer. -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <link rel="stylesheet" href="lomba.css" />
+  </head>
+  <body class="is-loading">
+    <!-- LOGO: huruf U dengan panah naik, tanda usaha yang tumbuh. -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="logoFill" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#5f9a7c" />
+          <stop offset="1" stop-color="#2c5243" />
+        </linearGradient>
+      </defs>
+      <symbol id="logo" viewBox="0 0 64 64">
+        <rect width="64" height="64" rx="15" fill="url(#logoFill)" />
+        <path d="M18 17v18a14 14 0 0 0 28 0V21" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+        <path
+          d="M37.500 25.500 46 15l8.500 10.500"
+          fill="none"
+          stroke="#a8ecc8"
+          stroke-width="7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </symbol>
+    </svg>
+
+    <!-- LAYAR LOADING SAAT WEBSITE DIBUKA -->
+    <div id="splash" class="splash" role="status">
+      <span class="splash-mark"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo" /></svg></span>
+      <strong>Usaha<span class="brand-light">Cerdas</span></strong>
+      <div class="splash-bar"><i></i></div>
+      <small id="splashText">Memuat aplikasi...</small>
+    </div>
+
+    <div id="topLoader" class="top-loader" aria-hidden="true"></div>
+
+    <!-- MASUK / AKUN PERTAMA -->
+    <div id="authView" class="auth-view hidden">
+      <button type="button" class="round-button auth-theme" data-theme-toggle aria-label="Ganti tema"></button>
+
+      <aside class="auth-side">
+        <div id="authSlides" class="auth-slides" aria-hidden="true"></div>
+        <div class="brand">
+          <span class="brand-mark"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo" /></svg></span>
+          <span>Usaha<span class="brand-light">Cerdas</span></span>
+        </div>
+
+        <div>
+          <h2>Kelola usaha lebih tenang, dari kasir sampai laporan.</h2>
+          <ul class="auth-points">
+            <li><span data-icon="check"></span> Catat penjualan dan cetak struk dalam hitungan detik</li>
+            <li><span data-icon="check"></span> Stok berkurang otomatis dan ada peringatan saat menipis</li>
+            <li><span data-icon="check"></span> Lihat keuntungan dan laba bersih kapan saja</li>
+          </ul>
+        </div>
+
+        <small>Dibuat untuk usaha kecil di Indonesia.</small>
+      </aside>
+
+      <div class="auth-main">
+      <form id="authForm" class="auth-card">
+        <div class="brand">
+          <span class="brand-mark" id="authLogo"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo" /></svg></span>
+          <span>Usaha<span class="brand-light">Cerdas</span></span>
+        </div>
+
+        <h1 id="authTitle">Masuk</h1>
+        <p id="authSubtitle">Masuk untuk membuka kasir usahamu.</p>
+
+        <div id="authNameField" class="hidden">
+          <label class="field-label" for="authName">Nama lengkap</label>
+          <input id="authName" type="text" maxlength="60" autocomplete="name" />
+        </div>
+
+        <label class="field-label" for="authUsername">Nama pengguna</label>
+        <input id="authUsername" type="text" maxlength="40" autocomplete="username" required />
+
+        <label class="field-label" for="authPassword">Kata sandi</label>
+        <input id="authPassword" type="password" maxlength="128" autocomplete="current-password" required />
+        <p id="authHint" class="field-hint hidden">Minimal 8 karakter.</p>
+
+        <div id="authError" class="auth-error hidden" role="alert"></div>
+        <div id="authSuccess" class="auth-success hidden" role="status"></div>
+
+        <button id="authSubmit" type="submit" class="primary-button full-button" style="margin-top: 18px">
+          Masuk
+        </button>
+
+        <p id="authSwitch" class="auth-switch">
+          <span id="authSwitchText"></span>
+          <button type="button" id="authSwitchButton" class="link-button"></button>
+        </p>
+      </form>
+      </div>
+    </div>
+
+    <div id="appView" class="hidden">
+      <header class="topbar">
+        <a class="brand" href="#dashboard" id="homeLink">
+          <span class="brand-mark"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#logo" /></svg></span>
+          <span>Usaha<span class="brand-light">Cerdas</span></span>
+        </a>
+
+        <div class="topbar-right">
+          <span id="todayLabel" class="today"></span>
+          <button type="button" id="paletteButton" class="palette-button" aria-label="Cari cepat">
+            <span data-icon="search"></span>
+            <span class="palette-label">Cari cepat</span>
+            <kbd>Ctrl K</kbd>
+          </button>
+          <button type="button" class="round-button" data-theme-toggle aria-label="Ganti tema"></button>
+          <div class="user-chip">
+            <div>
+              <strong id="userName"></strong>
+              <small id="userRole"></small>
+            </div>
+            <button type="button" id="logoutButton" class="round-button" aria-label="Keluar" title="Keluar">
+              <span data-icon="logout"></span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="layout">
+        <aside class="sidebar">
+          <p class="menu-label">MENU UTAMA</p>
+          <div id="navPill" class="nav-pill" aria-hidden="true"></div>
+          <button class="nav-button owner-only" data-page="dashboard">
+            <span data-icon="dashboard" class="nav-icon"></span> <span>Dashboard</span>
+          </button>
+          <button class="nav-button" data-page="cashier">
+            <span data-icon="cart" class="nav-icon"></span> <span>Kasir</span>
+          </button>
+          <button class="nav-button" data-page="products">
+            <span data-icon="box" class="nav-icon"></span> <span>Produk</span>
+          </button>
+          <button class="nav-button" data-page="transactions">
+            <span data-icon="receipt" class="nav-icon"></span> <span>Riwayat<span class="nav-long"> transaksi</span></span>
+          </button>
+          <button class="nav-button owner-only" data-page="expenses">
+            <span data-icon="wallet" class="nav-icon"></span> <span>Pengeluaran</span>
+          </button>
+          <button class="nav-button owner-only" data-page="reports">
+            <span data-icon="chart" class="nav-icon"></span> <span>Laporan</span>
+          </button>
+          <button class="nav-button" data-page="settings">
+            <span data-icon="settings" class="nav-icon"></span> <span>Pengaturan</span>
+            <b id="pendingBadge" class="nav-badge hidden" title="Permintaan akun baru"></b>
+          </button>
+        </aside>
+
+        <main class="main-content">
+          <!-- LOADING SAAT PINDAH HALAMAN -->
+          <div id="pageLoader" class="page-loader hidden" role="status">
+            <span class="spinner"></span>
+            <small>Memuat...</small>
+          </div>
+
+          <!-- DASHBOARD -->
+          <section id="dashboard" class="page">
+            <div class="page-heading">
+              <p class="eyebrow">RINGKASAN USAHA</p>
+              <h1 id="greeting">Dashboard</h1>
+              <p class="subheading">Lihat perkembangan penjualan usahamu.</p>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card">
+                <p>Omzet hari ini</p>
+                <h2 id="todayRevenue">Rp0</h2>
+                <small id="todayTrend"></small>
+                <div id="sparkToday" class="spark" aria-hidden="true"></div>
+              </article>
+
+              <article class="stat-card">
+                <p>Omzet 7 hari</p>
+                <h2 id="weekRevenue">Rp0</h2>
+                <small id="weekTrend"></small>
+                <div id="sparkRevenue" class="spark" aria-hidden="true"></div>
+              </article>
+
+              <article class="stat-card">
+                <p>Keuntungan kotor 7 hari</p>
+                <h2 id="weekProfit">Rp0</h2>
+                <small id="profitTrend"></small>
+                <div id="sparkProfit" class="spark" aria-hidden="true"></div>
+              </article>
+
+              <article class="stat-card">
+                <p>Transaksi 7 hari</p>
+                <h2 id="weekCount">0</h2>
+                <small id="countTrend"></small>
+                <div id="sparkCount" class="spark" aria-hidden="true"></div>
+              </article>
+            </div>
+
+            <div class="content-grid">
+              <article class="panel chart-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Grafik penjualan</h2>
+                    <p id="chartSubtitle"></p>
+                  </div>
+                  <div class="chart-controls">
+                    <div id="chartMetric" class="chip-row" role="group" aria-label="Jenis data">
+                      <button type="button" class="chip active" data-metric="revenue">Omzet</button>
+                      <button type="button" class="chip" data-metric="profit">Keuntungan</button>
+                      <button type="button" class="chip" data-metric="count">Transaksi</button>
+                    </div>
+                    <div id="chartPeriod" class="chip-row" role="group" aria-label="Periode">
+                      <button type="button" class="chip active" data-period="7">7 hari</button>
+                      <button type="button" class="chip" data-period="30">30 hari</button>
+                      <button type="button" class="chip" data-period="month">Bulan ini</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="chartSummary" class="chart-summary"></div>
+                <div id="salesChart" class="chart"></div>
+
+                <div class="chart-legend">
+                  <span class="legend-now">Periode ini</span>
+                  <button type="button" id="chartCompare" class="legend-compare active" aria-pressed="true">
+                    Periode sebelumnya
+                  </button>
+                </div>
+              </article>
+
+              <article class="panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Transaksi terbaru</h2>
+                    <p>Lima transaksi terakhir</p>
+                  </div>
+                </div>
+
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>TANGGAL</th>
+                        <th>RINCIAN</th>
+                        <th>TOTAL</th>
+                      </tr>
+                    </thead>
+                    <tbody id="recentTransactions"></tbody>
+                  </table>
+                </div>
+
+                <button class="link-button" data-page="transactions">
+                  Lihat semua transaksi →
+                </button>
+              </article>
+
+              <article class="panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Produk terlaris</h2>
+                    <p>Lima produk paling banyak terjual</p>
+                  </div>
+                </div>
+
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>PRODUK</th>
+                        <th>TERJUAL</th>
+                        <th>OMZET</th>
+                      </tr>
+                    </thead>
+                    <tbody id="topProducts"></tbody>
+                  </table>
+                </div>
+              </article>
+
+              <article class="panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Stok menipis</h2>
+                    <p>Produk dengan stok 5 atau kurang</p>
+                  </div>
+                </div>
+
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>PRODUK</th>
+                        <th>STOK</th>
+                        <th>AKSI</th>
+                      </tr>
+                    </thead>
+                    <tbody id="lowStockRows"></tbody>
+                  </table>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- PRODUK -->
+          <section id="products" class="page">
+            <div class="page-heading heading-row">
+              <div>
+                <p class="eyebrow">KATALOG USAHA</p>
+                <h1>Produk</h1>
+                <p class="subheading">
+                  Atur daftar produk, harga, modal, dan stok.
+                </p>
+              </div>
+              <div class="heading-actions owner-only">
+                <button id="stockHistoryButton" class="secondary-button">
+                  <span data-icon="history"></span> Riwayat stok
+                </button>
+                <button id="addProductButton" class="primary-button">
+                  <span data-icon="plus"></span> Tambah produk
+                </button>
+              </div>
+            </div>
+
+            <article class="panel">
+              <div class="toolbar toolbar-row">
+                <input
+                  id="productSearch"
+                  type="search"
+                  placeholder="Cari nama produk atau barcode..."
+                />
+                <select id="productCategoryFilter" aria-label="Filter kategori"></select>
+              </div>
+
+              <div class="table-wrap">
+                <table class="cards-on-phone">
+                  <thead>
+                    <tr>
+                      <th>NAMA PRODUK</th>
+                      <th>KATEGORI</th>
+                      <th>HARGA JUAL</th>
+                      <th class="owner-only">MODAL</th>
+                      <th>STOK</th>
+                      <th class="owner-only">AKSI</th>
+                    </tr>
+                  </thead>
+                  <tbody id="productRows"></tbody>
+                </table>
+              </div>
+
+              <div id="productEmpty"></div>
+            </article>
+          </section>
+
+          <!-- KASIR -->
+          <section id="cashier" class="page">
+            <div class="page-heading">
+              <p class="eyebrow">PENCATATAN PENJUALAN</p>
+              <h1>Kasir</h1>
+              <p class="subheading">
+                Pilih produk untuk memasukkannya ke keranjang.
+              </p>
+            </div>
+
+            <div class="cashier-layout">
+              <article class="panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Daftar produk</h2>
+                    <p>Pilih produk atau pindai barcode.</p>
+                  </div>
+                </div>
+
+                <input
+                  id="cashierSearch"
+                  class="search-input"
+                  type="search"
+                  placeholder="Cari produk atau pindai barcode, lalu Enter..."
+                />
+                <p class="shortcut-hint">
+                  <span><kbd>F2</kbd> Cari produk</span>
+                  <span><kbd>F4</kbd> Uang diterima</span>
+                  <span><kbd>F9</kbd> Selesaikan</span>
+                  <span><kbd>Esc</kbd> Tutup</span>
+                </p>
+                <div id="cashierCategories" class="chip-row"></div>
+                <div id="cashierProducts" class="product-grid"></div>
+                <div id="cashierEmpty"></div>
+              </article>
+
+              <article class="panel cart-panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Keranjang</h2>
+                    <p id="cartCount">0 item</p>
+                  </div>
+                  <div class="cart-heading-actions">
+                    <button id="emptyCartButton" class="small-button">
+                      Kosongkan
+                    </button>
+                    <button type="button" id="cartClose" class="icon-button cart-close" aria-label="Tutup keranjang">×</button>
+                  </div>
+                </div>
+
+                <div id="cartItems" class="cart-items"></div>
+
+                <div class="subtotal-line">
+                  <span>Subtotal</span>
+                  <span id="cartSubtotal">Rp0</span>
+                </div>
+
+                <label class="field-label" for="discountInput">Diskon (Rp)</label>
+                <input
+                  id="discountInput"
+                  type="number"
+                  min="0"
+                  placeholder="0"
+                />
+
+                <div class="total-line total-after-discount">
+                  <span>Total</span>
+                  <strong id="cartTotal">Rp0</strong>
+                </div>
+
+                <span class="field-label">Metode pembayaran</span>
+                <div id="paymentMethods" class="chip-row method-row">
+                  <button type="button" class="chip active" data-method="TUNAI">Tunai</button>
+                  <button type="button" class="chip" data-method="QRIS">QRIS</button>
+                  <button type="button" class="chip" data-method="TRANSFER">Transfer</button>
+                </div>
+
+                <div id="cashFields">
+                  <label class="field-label" for="paymentInput">Uang diterima</label>
+                  <input
+                    id="paymentInput"
+                    type="number"
+                    min="0"
+                    placeholder="Masukkan jumlah uang"
+                  />
+
+                  <div id="quickCash" class="chip-row quick-cash">
+                    <button type="button" class="chip" data-cash="exact">Uang pas</button>
+                    <button type="button" class="chip" data-cash="20000">20rb</button>
+                    <button type="button" class="chip" data-cash="50000">50rb</button>
+                    <button type="button" class="chip" data-cash="100000">100rb</button>
+                  </div>
+
+                  <div class="total-line change-line">
+                    <span>Kembalian</span>
+                    <strong id="changeTotal">Rp0</strong>
+                  </div>
+                </div>
+
+                <button
+                  id="completeSaleButton"
+                  class="primary-button full-button"
+                  disabled
+                >
+                  Selesaikan transaksi
+                </button>
+              </article>
+            </div>
+
+            <!-- BAR KERANJANG DI HP -->
+            <div id="cartBackdrop" class="cart-backdrop"></div>
+            <button type="button" id="cartBar" class="cart-bar">
+              <span id="cartBarCount">0 item</span>
+              <strong id="cartBarTotal">Rp0</strong>
+              <span class="cart-bar-action">Lihat keranjang</span>
+            </button>
+          </section>
+
+          <!-- RIWAYAT TRANSAKSI -->
+          <section id="transactions" class="page">
+            <div class="page-heading heading-row">
+              <div>
+                <p class="eyebrow">CATATAN PENJUALAN</p>
+                <h1>Riwayat transaksi</h1>
+                <p class="subheading">Semua transaksi yang sudah diselesaikan.</p>
+              </div>
+
+              <button id="clearHistoryButton" class="danger-button owner-only">
+                <span data-icon="trash"></span> Hapus semua riwayat
+              </button>
+            </div>
+
+            <div class="stats-grid history-stats">
+              <article class="stat-card">
+                <p>Jumlah transaksi</p>
+                <h2 id="historyCount">0</h2>
+                <small>Pada periode terpilih</small>
+              </article>
+
+              <article class="stat-card">
+                <p>Total omzet</p>
+                <h2 id="historyRevenue">Rp0</h2>
+                <small>Tanpa transaksi dibatalkan</small>
+              </article>
+            </div>
+
+            <article class="panel">
+              <div class="toolbar toolbar-row">
+                <input
+                  id="transactionSearch"
+                  type="search"
+                  placeholder="Cari ID, produk, atau kasir..."
+                />
+                <button type="button" id="historyDate" class="date-button"></button>
+              </div>
+
+              <div class="table-wrap">
+                <table class="cards-on-phone">
+                  <thead>
+                    <tr>
+                      <th>WAKTU</th>
+                      <th>RINCIAN</th>
+                      <th>METODE</th>
+                      <th>KASIR</th>
+                      <th>TOTAL</th>
+                      <th>AKSI</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transactionRows"></tbody>
+                </table>
+              </div>
+
+              <div id="transactionEmpty"></div>
+            </article>
+          </section>
+
+          <!-- PENGELUARAN -->
+          <section id="expenses" class="page">
+            <div class="page-heading heading-row">
+              <div>
+                <p class="eyebrow">BIAYA USAHA</p>
+                <h1>Pengeluaran</h1>
+                <p class="subheading">Catat sewa, listrik, gaji, dan bahan untuk melihat laba bersih.</p>
+              </div>
+
+              <button id="addExpenseButton" class="primary-button">
+                <span data-icon="plus"></span> Tambah pengeluaran
+              </button>
+            </div>
+
+            <div class="stats-grid history-stats">
+              <article class="stat-card">
+                <p>Total pengeluaran</p>
+                <h2 id="expenseTotal">Rp0</h2>
+                <small>Pada periode terpilih</small>
+              </article>
+
+              <article class="stat-card">
+                <p>Bulan ini</p>
+                <h2 id="expenseMonth">Rp0</h2>
+                <small>Sejak tanggal 1</small>
+              </article>
+            </div>
+
+            <article class="panel">
+              <div class="toolbar toolbar-row">
+                <input
+                  id="expenseSearch"
+                  type="search"
+                  placeholder="Cari kategori atau keterangan..."
+                />
+                <button type="button" id="expenseDate" class="date-button"></button>
+              </div>
+
+              <div class="table-wrap">
+                <table class="cards-on-phone">
+                  <thead>
+                    <tr>
+                      <th>TANGGAL</th>
+                      <th>KATEGORI</th>
+                      <th>KETERANGAN</th>
+                      <th>JUMLAH</th>
+                      <th>AKSI</th>
+                    </tr>
+                  </thead>
+                  <tbody id="expenseRows"></tbody>
+                </table>
+              </div>
+
+              <div id="expenseEmpty"></div>
+            </article>
+          </section>
+
+          <!-- LAPORAN -->
+          <section id="reports" class="page">
+            <div class="page-heading heading-row">
+              <div>
+                <p class="eyebrow">LAPORAN USAHA</p>
+                <h1>Laporan</h1>
+                <p class="subheading">Lihat kinerja usaha untuk periode yang kamu pilih.</p>
+              </div>
+
+              <div class="heading-actions">
+                <button type="button" id="reportDate" class="date-button"></button>
+                <button id="exportButton" class="secondary-button">
+                  <span data-icon="download"></span> Unduh CSV
+                </button>
+              </div>
+            </div>
+
+            <div class="stats-grid three">
+              <article class="stat-card">
+                <p>Omzet</p>
+                <h2 id="reportRevenue">Rp0</h2>
+                <small id="reportRevenueTrend">Setelah diskon</small>
+              </article>
+
+              <article class="stat-card">
+                <p>Keuntungan kotor</p>
+                <h2 id="reportProfit">Rp0</h2>
+                <small>Omzet dikurangi modal</small>
+              </article>
+
+              <article class="stat-card">
+                <p>Pengeluaran</p>
+                <h2 id="reportExpenses">Rp0</h2>
+                <small>Sewa, listrik, gaji, dan lainnya</small>
+              </article>
+
+              <article class="stat-card">
+                <p>Laba bersih</p>
+                <h2 id="reportNet">Rp0</h2>
+                <small>Keuntungan kotor dikurangi pengeluaran</small>
+              </article>
+
+              <article class="stat-card">
+                <p>Transaksi</p>
+                <h2 id="reportCount">0</h2>
+                <small id="reportCancelled">0 dibatalkan</small>
+              </article>
+
+              <article class="stat-card">
+                <p>Rata-rata transaksi</p>
+                <h2 id="reportAverage">Rp0</h2>
+                <small>Omzet ÷ transaksi</small>
+              </article>
+            </div>
+
+            <div class="content-grid">
+              <article class="panel">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Penjualan per produk</h2>
+                    <p>Sebelum diskon transaksi</p>
+                  </div>
+                </div>
+
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>PRODUK</th>
+                        <th>TERJUAL</th>
+                        <th>OMZET</th>
+                        <th>KEUNTUNGAN</th>
+                      </tr>
+                    </thead>
+                    <tbody id="reportProducts"></tbody>
+                  </table>
+                </div>
+              </article>
+
+              <div>
+                <article class="panel" style="margin-bottom: 18px">
+                  <div class="panel-heading">
+                    <div>
+                      <h2>Per metode pembayaran</h2>
+                      <p>Omzet per metode</p>
+                    </div>
+                  </div>
+
+                  <div class="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>METODE</th>
+                          <th>TRANSAKSI</th>
+                          <th>OMZET</th>
+                        </tr>
+                      </thead>
+                      <tbody id="reportMethods"></tbody>
+                    </table>
+                  </div>
+                </article>
+
+                <article class="panel">
+                  <div class="panel-heading">
+                    <div>
+                      <h2>Pengeluaran per kategori</h2>
+                      <p>Pada periode terpilih</p>
+                    </div>
+                  </div>
+
+                  <div class="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>KATEGORI</th>
+                          <th>JUMLAH</th>
+                        </tr>
+                      </thead>
+                      <tbody id="reportExpenseCategories"></tbody>
+                    </table>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <!-- PENGATURAN -->
+          <section id="settings" class="page">
+            <div class="page-heading">
+              <p class="eyebrow">AKUN DAN TOKO</p>
+              <h1>Pengaturan</h1>
+              <p class="subheading">Atur informasi toko, tim, dan akunmu.</p>
+            </div>
+
+            <div class="settings-grid">
+              <form id="storeForm" class="panel owner-only">
+                <div class="panel-heading">
+                  <div>
+                    <h2>Informasi toko</h2>
+                    <p>Ditampilkan pada struk.</p>
+                  </div>
+                </div>
+
+                <span class="field-label" style="margin-top: 0">Logo</span>
+                <div class="logo-row">
+                  <div id="logoPreview" class="logo-preview"></div>
+                  <label class="small-button" for="logoInput" style="cursor: pointer">Pilih gambar</label>
+                  <input id="logoInput" class="hidden" type="file" accept="image/png,image/jpeg" />
+                  <button type="button" id="removeLogo" class="small-button">Hapus</button>
+                </div>
+
+                <label class="field-label" for="storeName">Nama toko</label>
+                <input id="storeName" type="text" maxlength="60" required />
+
+                <label class="field-label" for="storeAddress">Alamat</label>
+                <input id="storeAddress" type="text" maxlength="200" />
+
+                <label class="field-label" for="storePhone">Telepon</label>
+                <input id="storePhone" type="text" maxlength="30" />
+
+                <label class="field-label" for="storeFooter">Catatan di bawah struk</label>
+                <input id="storeFooter" type="text" maxlength="200" placeholder="Terima kasih sudah berbelanja!" />
+
+                <div class="panel-actions">
+                  <button type="submit" class="primary-button">Simpan toko</button>
+                </div>
+              </form>
+
+              <div>
+                <form id="passwordForm" class="panel" style="margin-bottom: 18px">
+                  <div class="panel-heading">
+                    <div>
+                      <h2>Ubah kata sandi</h2>
+                      <p>Perangkat lain akan otomatis keluar.</p>
+                    </div>
+                  </div>
+
+                  <label class="field-label" for="currentPassword" style="margin-top: 0">Kata sandi saat ini</label>
+                  <input id="currentPassword" type="password" autocomplete="current-password" required />
+
+                  <label class="field-label" for="newPassword">Kata sandi baru</label>
+                  <input id="newPassword" type="password" minlength="8" autocomplete="new-password" required />
+                  <p class="field-hint">Minimal 8 karakter.</p>
+
+                  <div class="panel-actions">
+                    <button type="submit" class="primary-button">Ubah kata sandi</button>
+                  </div>
+                </form>
+
+                <article class="panel owner-only">
+                  <div class="panel-heading">
+                    <div>
+                      <h2>Tim</h2>
+                      <p>Staf hanya bisa memakai kasir dan melihat produk serta riwayat.</p>
+                    </div>
+                    <button id="addUserButton" class="small-button">
+                      <span data-icon="plus"></span> Tambah akun
+                    </button>
+                  </div>
+
+                  <div class="table-wrap">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>NAMA</th>
+                          <th>PERAN</th>
+                          <th>STATUS</th>
+                          <th>AKSI</th>
+                        </tr>
+                      </thead>
+                      <tbody id="userRows"></tbody>
+                    </table>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- FORM TAMBAH / EDIT PRODUK -->
+    <div id="productDialog" class="dialog-backdrop hidden">
+      <form id="productForm" class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">KATALOG USAHA</p>
+            <h2 id="dialogTitle">Tambah produk</h2>
+          </div>
+          <button type="button" class="icon-button" data-close aria-label="Tutup">×</button>
+        </div>
+
+        <input type="hidden" id="productId" />
+
+        <label class="field-label" for="productName">Nama produk</label>
+        <input
+          id="productName"
+          type="text"
+          required
+          maxlength="60"
+          placeholder="Contoh: Nasi goreng"
+        />
+
+        <div class="form-grid">
+          <div>
+            <label class="field-label" for="productCategory">Kategori (opsional)</label>
+            <input
+              id="productCategory"
+              type="text"
+              maxlength="40"
+              list="categoryOptions"
+              placeholder="Contoh: Makanan"
+            />
+            <datalist id="categoryOptions"></datalist>
+          </div>
+
+          <div>
+            <label class="field-label" for="productBarcode">Barcode (opsional)</label>
+            <input id="productBarcode" type="text" maxlength="64" placeholder="Pindai atau ketik" />
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div>
+            <label class="field-label" for="productPrice">Harga jual (Rp)</label>
+            <input id="productPrice" type="number" min="0" required />
+          </div>
+
+          <div>
+            <label class="field-label" for="productCost">Modal (Rp)</label>
+            <input id="productCost" type="number" min="0" required />
+          </div>
+        </div>
+
+        <label class="field-label" for="productStock">Stok</label>
+        <input
+          id="productStock"
+          type="number"
+          min="0"
+          step="1"
+          value="0"
+          required
+        />
+
+        <div class="dialog-actions">
+          <button type="button" class="secondary-button" data-close>Batal</button>
+          <button type="submit" class="primary-button">Simpan produk</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RESTOK -->
+    <div id="restockDialog" class="dialog-backdrop hidden">
+      <form id="restockForm" class="dialog" role="dialog" aria-modal="true" aria-labelledby="restockTitle">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">TAMBAH STOK</p>
+            <h2 id="restockTitle">Restok</h2>
+          </div>
+          <button type="button" class="icon-button" data-close aria-label="Tutup">×</button>
+        </div>
+
+        <p class="subheading" id="restockCurrent"></p>
+
+        <label class="field-label" for="restockQuantity">Jumlah masuk</label>
+        <input id="restockQuantity" type="number" min="1" step="1" required />
+
+        <label class="field-label" for="restockNote">Catatan (opsional)</label>
+        <input id="restockNote" type="text" maxlength="200" placeholder="Contoh: Dari supplier Pak Budi" />
+
+        <div class="dialog-actions">
+          <button type="button" class="secondary-button" data-close>Batal</button>
+          <button type="submit" class="primary-button">Tambah stok</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIWAYAT STOK -->
+    <div id="stockDialog" class="dialog-backdrop hidden">
+      <div class="dialog wide" role="dialog" aria-modal="true" aria-labelledby="stockTitle">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">PERGERAKAN BARANG</p>
+            <h2 id="stockTitle">Riwayat stok</h2>
+          </div>
+          <button type="button" class="icon-button" data-close aria-label="Tutup">×</button>
+        </div>
+
+        <div class="table-wrap scroll-list">
+          <table>
+            <thead>
+              <tr>
+                <th>WAKTU</th>
+                <th>PRODUK</th>
+                <th>ALASAN</th>
+                <th>PERUBAHAN</th>
+                <th>SISA</th>
+                <th>OLEH</th>
+              </tr>
+            </thead>
+            <tbody id="stockRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM PENGELUARAN -->
+    <div id="expenseDialog" class="dialog-backdrop hidden">
+      <form id="expenseForm" class="dialog" role="dialog" aria-modal="true" aria-labelledby="expenseTitle">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">BIAYA USAHA</p>
+            <h2 id="expenseTitle">Tambah pengeluaran</h2>
+          </div>
+          <button type="button" class="icon-button" data-close aria-label="Tutup">×</button>
+        </div>
+
+        <span class="field-label">Tanggal</span>
+        <button type="button" id="expenseFormDate" class="date-button full"></button>
+
+        <div class="form-grid">
+          <div>
+            <label class="field-label" for="expenseCategory">Kategori</label>
+            <input id="expenseCategory" type="text" maxlength="40" list="expenseCategoryOptions" required placeholder="Contoh: Sewa" />
+            <datalist id="expenseCategoryOptions"></datalist>
+          </div>
+
+          <div>
+            <label class="field-label" for="expenseAmount">Jumlah (Rp)</label>
+            <input id="expenseAmount" type="number" min="1" required />
+          </div>
+        </div>
+
+        <label class="field-label" for="expenseDescription">Keterangan (opsional)</label>
+        <input id="expenseDescription" type="text" maxlength="200" placeholder="Contoh: Sewa kios bulan ini" />
+
+        <div class="dialog-actions">
+          <button type="button" class="secondary-button" data-close>Batal</button>
+          <button type="submit" class="primary-button">Simpan</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- FORM AKUN -->
+    <div id="userDialog" class="dialog-backdrop hidden">
+      <form id="userForm" class="dialog" role="dialog" aria-modal="true" aria-labelledby="userTitle">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">TIM</p>
+            <h2 id="userTitle">Tambah akun</h2>
+          </div>
+          <button type="button" class="icon-button" data-close aria-label="Tutup">×</button>
+        </div>
+
+        <div id="userNewFields">
+          <label class="field-label" for="newUserName">Nama</label>
+          <input id="newUserName" type="text" maxlength="60" />
+
+          <label class="field-label" for="newUserUsername">Nama pengguna</label>
+          <input id="newUserUsername" type="text" maxlength="40" autocomplete="off" />
+        </div>
+
+        <label class="field-label" for="newUserRole">Peran</label>
+        <select id="newUserRole">
+          <option value="STAFF">Staf</option>
+          <option value="OWNER">Pemilik</option>
+        </select>
+
+        <label class="field-label" for="newUserPassword" id="newUserPasswordLabel">Kata sandi</label>
+        <input id="newUserPassword" type="password" autocomplete="new-password" />
+        <p class="field-hint" id="newUserPasswordHint">Minimal 8 karakter. Berikan kepada orangnya secara pribadi.</p>
+
+        <div class="dialog-actions">
+          <button type="button" class="secondary-button" data-close>Batal</button>
+          <button type="submit" class="primary-button">Simpan</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- CARI CEPAT -->
+    <div id="paletteDialog" class="dialog-backdrop palette-backdrop hidden">
+      <div class="palette" role="dialog" aria-modal="true" aria-label="Cari cepat">
+        <div class="palette-search">
+          <span data-icon="search"></span>
+          <input
+            id="paletteInput"
+            type="text"
+            placeholder="Cari halaman, perintah, atau produk..."
+            autocomplete="off"
+            aria-label="Cari"
+          />
+          <kbd>Esc</kbd>
+        </div>
+        <div id="paletteList" class="palette-list" role="listbox"></div>
+      </div>
+    </div>
+
+    <!-- KONFIRMASI -->
+    <div id="confirmDialog" class="dialog-backdrop hidden" style="z-index: 30">
+      <div class="dialog confirm-dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <h2 id="confirmTitle"></h2>
+        <p id="confirmMessage"></p>
+        <div class="dialog-actions">
+          <button type="button" id="confirmCancel" class="secondary-button">Batal</button>
+          <button type="button" id="confirmOk" class="primary-button danger-solid"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STRUK -->
+    <div id="receiptDialog" class="dialog-backdrop hidden">
+      <div class="dialog receipt-dialog" role="dialog" aria-modal="true" aria-labelledby="receiptTitle">
+        <div class="dialog-heading no-print">
+          <div>
+            <p class="eyebrow">BUKTI TRANSAKSI</p>
+            <h2 id="receiptTitle">Struk</h2>
+          </div>
+          <button type="button" class="icon-button" data-close aria-label="Tutup">×</button>
+        </div>
+
+        <div id="receiptContent" class="receipt"></div>
+
+        <div class="dialog-actions no-print">
+          <button type="button" class="secondary-button" data-close>Tutup</button>
+          <button type="button" id="printReceipt" class="primary-button">
+            <span data-icon="printer"></span> Cetak struk
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CUSTOMER SERVICE OTOMATIS -->
+    <div class="help-widget no-print">
+      <section id="helpPanel" class="help-panel hidden" aria-label="Bantuan">
+        <header class="help-header">
+          <span class="help-avatar">R</span>
+          <div>
+            <strong>Rudi</strong>
+            <small>Asisten otomatis UsahaCerdas</small>
+          </div>
+          <button type="button" id="helpClose" class="icon-button" aria-label="Tutup bantuan">×</button>
+        </header>
+
+        <div id="helpMessages" class="help-messages" aria-live="polite"></div>
+        <div id="helpTopics" class="help-topics"></div>
+
+        <form id="helpForm" class="help-form">
+          <input id="helpInput" type="text" maxlength="200" placeholder="Tulis pertanyaanmu..." aria-label="Pertanyaan" autocomplete="off" />
+          <button type="submit" class="primary-button" aria-label="Kirim">
+            <span data-icon="send"></span>
+          </button>
+        </form>
+      </section>
+
+      <button type="button" id="helpButton" class="help-button" aria-label="Buka bantuan" title="Butuh bantuan?">
+        <span data-icon="chat"></span>
+      </button>
+    </div>
+
+    <div id="toast" class="toast" role="status"></div>
+
+    <script src="lomba.js" onerror="document.getElementById('splash').remove()"></script>
+  </body>
+</html>

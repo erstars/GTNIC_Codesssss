@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>UsahaCerdas — Dokumentasi Sistem</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  body { font-family: "Segoe UI", Arial, sans-serif; color: #25332e; font-size: 10.5pt; line-height: 1.5; margin: 0; }
+  h1 { font-size: 20pt; color: #2c5243; margin: 0 0 4px; }
+  .sub { color: #6f7b75; margin: 0 0 18px; }
+  h2 { font-size: 14pt; color: #2c5243; border-bottom: 2px solid #c9dbd0; padding-bottom: 4px; margin: 22px 0 10px; break-after: avoid; }
+  h3 { font-size: 11pt; margin: 12px 0 4px; break-after: avoid; }
+  ul, ol { margin: 4px 0 8px; padding-left: 22px; }
+  li { margin: 2px 0; }
+  p { margin: 6px 0; }
+  code { font-family: Consolas, monospace; font-size: 9.5pt; background: #edf4ef; padding: 0 3px; border-radius: 3px; }
+  table { width: 100%; border-collapse: collapse; font-size: 9.5pt; margin: 8px 0; }
+  th, td { border: 1px solid #c9dbd0; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #47745e; color: #fff; }
+  tr:nth-child(even) td { background: #f6f8f5; }
+  figure { margin: 10px 0; text-align: center; break-inside: avoid; }
+  figure img { width: 100%; border: 1px solid #e3ebe6; border-radius: 6px; }
+  figure.tall img { width: 72%; }
+  figcaption { font-size: 9pt; color: #6f7b75; margin-top: 4px; }
+  .page { break-before: page; }
+  .note { background: #edf4ef; border-left: 4px solid #47745e; padding: 8px 12px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<h1>UsahaCerdas</h1>
+<p class="sub">Aplikasi kasir &amp; manajemen keuangan UMKM — dokumentasi fitur, arsitektur, basis data, dan batasan sistem</p>
+
+<h2>4.1 Fitur Utama</h2>
+
+<h3>1. Login dan Hak Akses</h3>
+<ul>
+  <li>Akun Pemilik dibuat saat pertama kali aplikasi dibuka.</li>
+  <li>Login memakai username dan kata sandi.</li>
+  <li>Ada dua peran:
+    <ul>
+      <li><b>Pemilik:</b> bisa membuka semua menu.</li>
+      <li><b>Staf:</b> hanya bisa membuka Kasir, Produk (lihat saja), Riwayat, dan Pengaturan kata sandi sendiri.</li>
+    </ul>
+  </li>
+  <li>Calon staf bisa membuat akun sendiri, tetapi akun baru aktif setelah disetujui Pemilik.</li>
+  <li>Pemilik bisa menambah, menonaktifkan, dan mengubah peran pengguna.</li>
+</ul>
+
+<h3>2. Dashboard</h3>
+<ul>
+  <li>Kartu ringkasan: omzet hari ini, jumlah transaksi, keuntungan, dan total produk. Setiap kartu punya grafik kecil (sparkline).</li>
+  <li>Grafik interaktif dengan pilihan omzet, keuntungan, atau jumlah transaksi, untuk 7 atau 30 hari. Grafik juga menampilkan periode sebelumnya sebagai pembanding.</li>
+  <li>Daftar transaksi terbaru, produk terlaris, dan peringatan stok menipis.</li>
+</ul>
+
+<h3>3. Manajemen Produk</h3>
+<ul>
+  <li>Tambah, ubah, dan hapus produk: nama, kategori, barcode, harga jual, harga modal, dan stok.</li>
+  <li>Pencarian dan filter berdasarkan kategori.</li>
+  <li><b>Restok:</b> menambah atau mengoreksi stok disertai catatan.</li>
+  <li><b>Riwayat stok</b> setiap produk: stok awal, restok, koreksi, terjual, dan dibatalkan.</li>
+</ul>
+
+<h3>4. Kasir (POS)</h3>
+<ul>
+  <li>Pilih produk dengan klik, pencarian, atau scan barcode.</li>
+  <li>Keranjang dengan jumlah yang tidak bisa melebihi stok.</li>
+  <li>Diskon dalam Rupiah.</li>
+  <li>Metode bayar Tunai, QRIS, atau Transfer. Untuk Tunai tersedia tombol uang cepat dan kembalian dihitung otomatis.</li>
+  <li>Struk transaksi bisa dicetak.</li>
+</ul>
+
+<h3>5. Riwayat Transaksi</h3>
+<ul>
+  <li>Daftar transaksi dengan filter tanggal dan rincian setiap transaksi.</li>
+  <li>Cetak ulang struk.</li>
+  <li>Pemilik bisa membatalkan transaksi; stok otomatis dikembalikan dan datanya tetap tersimpan.</li>
+</ul>
+
+<h3>6. Pengeluaran</h3>
+<ul><li>Mencatat biaya operasional per kategori dan tanggal.</li></ul>
+
+<h3>7. Laporan Keuangan</h3>
+<ul>
+  <li>Isinya: omzet, HPP (modal), laba kotor, pengeluaran, dan laba bersih untuk rentang tanggal yang dipilih.</li>
+  <li>Ada rekap per metode bayar dan per produk.</li>
+  <li>Laporan bisa diekspor ke CSV (Excel).</li>
+</ul>
+
+<h3>8. Pengaturan Toko</h3>
+<ul>
+  <li>Nama, alamat, telepon, catatan kaki struk, dan logo toko.</li>
+  <li>Ganti kata sandi.</li>
+</ul>
+
+<h3>9. Fitur Pendukung</h3>
+<ul>
+  <li>Mode gelap/terang.</li>
+  <li>Tampilan responsif untuk HP, dengan navigasi bawah dan keranjang model sheet.</li>
+  <li>Pemilih tanggal berbentuk kalender.</li>
+  <li>Command palette (Ctrl+K).</li>
+  <li>Shortcut keyboard: F2 untuk cari produk, F4 untuk bayar, F9 untuk selesaikan transaksi, Esc untuk menutup.</li>
+  <li>Layar loading.</li>
+  <li>Asisten bantuan "Rudi" untuk tanya-jawab cara memakai aplikasi.</li>
+</ul>
+
+<h2 class="page">5.1 Stack Teknologi &amp; Framework</h2>
+<table>
+  <tr><th style="width:26%">Lapisan</th><th>Teknologi</th></tr>
+  <tr><td>Frontend</td><td>HTML5, CSS3, Vanilla JavaScript (ES6+), Google Fonts Inter, ikon SVG inline</td></tr>
+  <tr><td>Backend</td><td>Node.js (modul <code>http</code> bawaan), modul Crypto (scrypt &amp; SHA-256)</td></tr>
+  <tr><td>Basis data</td><td>PostgreSQL, driver <code>pg</code> v8.23.1</td></tr>
+  <tr><td>Hosting</td><td>Server lokal Node.js (localhost:3000), bisa diakses HP di jaringan Wi-Fi yang sama; siap dipindah ke VPS</td></tr>
+  <tr><td>Lisensi pihak ketiga</td><td><code>pg</code> (MIT), font Inter (SIL Open Font License)</td></tr>
+</table>
+
+<h2>5.2 Arsitektur Sistem</h2>
+<p>UsahaCerdas memakai <b>arsitektur client–server tiga lapis</b>:</p>
+
+<h3>1. Lapisan Presentasi (Frontend)</h3>
+<ul>
+  <li>Single Page Application yang terdiri dari <code>lomba.html</code>, <code>lomba.css</code>, dan <code>lomba.js</code>.</li>
+  <li>Berjalan di browser komputer maupun HP.</li>
+  <li>Perpindahan halaman memakai hash routing (#dashboard, #cashier, dan seterusnya) tanpa memuat ulang halaman.</li>
+  <li>Frontend berkomunikasi dengan server melalui <code>fetch()</code> dalam format JSON.</li>
+</ul>
+
+<h3>2. Lapisan Aplikasi (Backend)</h3>
+<ul>
+  <li><code>server.js</code> memakai modul <code>http</code> bawaan Node.js, tanpa framework.</li>
+  <li>Tugasnya:
+    <ul>
+      <li>Menyajikan file statis, hanya file yang diizinkan.</li>
+      <li>Menyediakan REST API di <code>/api/*</code>.</li>
+      <li>Autentikasi: kata sandi di-hash dengan scrypt, dan token sesi disimpan sebagai hash SHA-256 dalam cookie HttpOnly.</li>
+      <li>Memeriksa hak akses Pemilik dan Staf.</li>
+      <li>Memvalidasi input dan menjalankan logika bisnis.</li>
+    </ul>
+  </li>
+  <li>Data sensitif seperti harga modal, keuntungan, dan pengeluaran tidak dikirim ke akun Staf.</li>
+</ul>
+
+<h3>3. Lapisan Data (Database)</h3>
+<ul>
+  <li>PostgreSQL, diakses lewat driver <code>pg</code> (connection pool).</li>
+  <li>Semua query memakai parameter, sehingga aman dari SQL injection.</li>
+</ul>
+
+<figure>
+  <img src="arsitektur-sistem.png" alt="Diagram arsitektur sistem">
+  <figcaption>Gambar 1. Arsitektur sistem UsahaCerdas</figcaption>
+</figure>
+
+<h3 class="page">Alur transaksi penjualan</h3>
+<ol>
+  <li>Kasir mengirim keranjang ke <code>POST /api/sales</code> beserta ID unik.</li>
+  <li>Server memulai transaksi database (BEGIN) dan mengunci baris produk (<code>SELECT … FOR UPDATE</code>).</li>
+  <li>Server memeriksa stok, lalu menghitung ulang total dari harga di database.</li>
+  <li>Server menyimpan transaksi dan rinciannya, mengurangi stok, dan mencatat riwayat stok.</li>
+  <li>Server menjalankan COMMIT.</li>
+  <li>Browser memuat ulang data dan menampilkan struk.</li>
+</ol>
+<p class="note">Jika ada yang gagal, semua langkah dibatalkan (ROLLBACK). ID unik mencegah transaksi tercatat dua kali.</p>
+
+<figure class="tall">
+  <img src="alur-transaksi.png" alt="Diagram alur transaksi penjualan">
+  <figcaption>Gambar 2. Alur transaksi penjualan di kasir</figcaption>
+</figure>
+
+<h2 class="page">5.3 Skema Basis Data (ERD)</h2>
+<p>Database <code>usahacerdas</code> memiliki 8 tabel dan 1 view.</p>
+
+<figure>
+  <img src="erd-database.png" alt="Entity Relationship Diagram">
+  <figcaption>Gambar 3. Entity Relationship Diagram database usahacerdas</figcaption>
+</figure>
+
+<table>
+  <tr><th style="width:18%">Tabel</th><th style="width:20%">Fungsi</th><th>Kolom utama</th></tr>
+  <tr><td>users</td><td>Akun pengguna</td><td>id (PK), name, username (unik), password_hash, role (OWNER/STAFF), is_active, is_pending</td></tr>
+  <tr><td>sessions</td><td>Sesi login</td><td>token_hash (PK), user_id (FK → users), expires_at</td></tr>
+  <tr><td>store_settings</td><td>Profil toko (1 baris)</td><td>name, address, phone, footer, logo</td></tr>
+  <tr><td>products</td><td>Data produk</td><td>id (PK), name (unik), category, barcode (unik), price, cost, stock ≥ 0</td></tr>
+  <tr><td>transactions</td><td>Header penjualan</td><td>id (PK), date, payment_method, discount, payment, change_amount, cashier_name, cancelled_at</td></tr>
+  <tr><td>transaction_items</td><td>Rincian penjualan</td><td>id (PK), transaction_id (FK), product_id (FK), name, price, cost, quantity &gt; 0</td></tr>
+  <tr><td>stock_movements</td><td>Riwayat stok</td><td>id (PK), product_id (FK), change, stock_after, reason (AWAL/RESTOK/KOREKSI/JUAL/BATAL), transaction_id (FK), user_name</td></tr>
+  <tr><td>expenses</td><td>Pengeluaran</td><td>id (PK), date, category, description, amount &gt; 0</td></tr>
+</table>
+
+<h3>Relasi</h3>
+<ul>
+  <li>users 1–N sessions. Jika user dihapus, sesinya ikut terhapus.</li>
+  <li>transactions 1–N transaction_items. Jika transaksi dihapus, rinciannya ikut terhapus.</li>
+  <li>products 1–N transaction_items. Jika produk dihapus, product_id menjadi NULL dan riwayat penjualan tetap ada.</li>
+  <li>products 1–N stock_movements.</li>
+  <li>transactions 1–N stock_movements.</li>
+  <li>expenses dan store_settings berdiri sendiri.</li>
+  <li><b>View <code>transaction_totals</code></b> menghitung total dan keuntungan setiap transaksi. Dari view ini laporan omzet dan laba dibuat.</li>
+</ul>
+
+<h2>6. Batasan Sistem Aplikasi</h2>
+<ol>
+  <li>Hanya untuk <b>satu toko</b>; belum mendukung banyak cabang.</li>
+  <li><b>QRIS dan Transfer hanya dicatat</b>, belum terhubung ke payment gateway.</li>
+  <li>Pembatalan transaksi hanya untuk <b>seluruh transaksi</b>; belum ada retur sebagian.</li>
+  <li><b>Belum ada pajak (PPN)</b> dan belum ada data pelanggan, membership, supplier, atau pembelian ke supplier.</li>
+  <li><b>Belum ada reset kata sandi lewat email.</b> Jika Pemilik lupa kata sandi, harus direset langsung di database.</li>
+  <li>Batas stok menipis masih <b>tetap (5)</b> dan tidak bisa diatur per produk.</li>
+  <li>Asisten "Rudi" adalah <b>bot berbasis kata kunci</b>, bukan AI dan bukan CS manusia.</li>
+  <li>Aplikasi <b>harus online ke server</b>; belum ada mode offline.</li>
+  <li>Saat ini berjalan di <b>server lokal (HTTP)</b>. Akses dari HP hanya lewat Wi-Fi yang sama dan belum terenkripsi HTTPS; untuk publik perlu di-deploy ke VPS dengan HTTPS.</li>
+  <li>Laporan dihitung di browser, jadi cocok untuk data UMKM skala kecil–menengah.</li>
+  <li>Hanya mendukung Bahasa Indonesia dan mata uang Rupiah.</li>
+  <li>Foto produk belum didukung.</li>
+  <li>Belum diuji pada printer thermal dan belum ada pengujian otomatis (automated testing).</li>
+</ol>
+
+</body>
+</html>
